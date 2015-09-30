@@ -10,9 +10,14 @@ id=imread('mask_id.bmp'); % Inferior Derecha
 %% Cargando imagen
 g=imread('globo.png');
 w=imread('bomba.png');
+figure(1); imshow(w)
+%% Cargando video
 
-%% Cargando viepo
-cam=videoinput('winvideo',1,'RGB24_640x480');
+%Para Windows
+%cam=videoinput('winvideo',1,'RGB24_640x480');
+
+%Para Mac
+cam=videoinput('macvideo',1,'YCbCr422_1280x720');
 
 %% Redimensionando imagen
 si=uint8(si);
@@ -25,6 +30,11 @@ sd=imresize(sd,[480,640]);
 ii=imresize(ii,[480,640]);
 id=imresize(id,[480,640]);
 
+%Para Mac
+% si=imresize(si,[720,1280]);
+% sd=imresize(sd,[720,1280]);
+% ii=imresize(ii,[720,1280]);
+% id=imresize(id,[720,1280]);
 %% Procesando imagen
 while(true)
         w=getsnapshot(cam);
