@@ -14,10 +14,10 @@ figure(1); imshow(w)
 %% Cargando video
 
 %Para Windows
-%cam=videoinput('winvideo',1,'RGB24_640x480');
+cam=videoinput('winvideo',1,'RGB24_640x480');
 
 %Para Mac
-cam=videoinput('macvideo',1,'YCbCr422_1280x720');
+%cam=videoinput('macvideo',1,'YCbCr422_1280x720');
 
 %% Redimensionando imagen
 si=uint8(si);
@@ -40,7 +40,7 @@ while(true)
         w=getsnapshot(cam);
         w=rgb2gray(w);
         
-        % Fusión de la captura y las mask
+        % FusiÃ³n de la captura y las mask
         fsi=si.*w;
         fsd=sd.*w;
         fii=ii.*w;
