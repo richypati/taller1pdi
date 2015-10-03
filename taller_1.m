@@ -9,7 +9,7 @@ id=imread('mask_id.bmp'); % Inferior Derecha
 
 %% Cargando imagen
 g=imread('globo.png');
-w=imread('bomba.png');
+b=imread('bomba.png');
 
 %% Cargando viepo
 cam=videoinput('winvideo',1,'RGB24_640x480');
@@ -24,6 +24,10 @@ si=imresize(si,[480,640]);
 sd=imresize(sd,[480,640]);
 ii=imresize(ii,[480,640]);
 id=imresize(id,[480,640]);
+
+s={si,sd,ii,id};
+
+umbral=obtenerEscenario(s);
 
 %% Procesando imagen
 while(true)
@@ -42,8 +46,19 @@ while(true)
         sii=sum(fii(:));
         sid=sum(fid(:));
         
-        figure(1);imshow(fsd);
-        title(['valor=',num2str(ssd)]);
+        checksum={ssi,ssd,sii,sid};
+ 
+        movimientoEnMask=detectaMovimientoEnMask(umbral, checksum);
+        puntos=puntos+explotarYVerificar(objetosEnMask,movimientoEnMask);
+        
+        % TODO: Crear algoritmo para poner globos y bombas en las mascaras
+        % TODO: Crear interfaz grafica para mostrar resultados (tanto
+        % puntos como para mensaje de perdiad
+        % TODO: Mostrar objetos en las esquinas sobre la imagen de la
+        % camara.
+        
+%        figure(1);imshow(fsd);
+%        title(['valor=',num2str(ssd)]);
         
 %         hold onclc
 %         [xb,yb]=size(w);
