@@ -11,8 +11,12 @@ id=imread('mask_id.bmp'); % Inferior Derecha
 g=imread('globo.png');
 b=imread('bomba.png');
 
-%% Cargando viepo
+%% Cargando video
+%Para Windows
 cam=videoinput('winvideo',1,'RGB24_640x480');
+
+%Para Mac
+%cam=videoinput('macvideo',1,'YCbCr422_1280x720');
 
 %% Redimensionando imagen
 si=uint8(si);
@@ -20,10 +24,17 @@ sd=uint8(sd);
 ii=uint8(ii);
 id=uint8(id);
 
+% Para PC Ricardo
 si=imresize(si,[480,640]);
 sd=imresize(sd,[480,640]);
 ii=imresize(ii,[480,640]);
 id=imresize(id,[480,640]);
+
+% Para Mac JuanPa
+% si=imresize(si,[720,1280]);
+% sd=imresize(sd,[720,1280]);
+% ii=imresize(ii,[720,1280]);
+% id=imresize(id,[720,1280]);
 
 s={si,sd,ii,id};
 
@@ -34,7 +45,7 @@ while(true)
         w=getsnapshot(cam);
         w=rgb2gray(w);
         
-        % Fusión de la captura y las mask
+        % Fusion de la captura y las mask
         fsi=si.*w;
         fsd=sd.*w;
         fii=ii.*w;
