@@ -1,4 +1,4 @@
-function [ umbral ] = obtenerEscenario(s)
+function [ umbral ] = obtenerEscenario()
 %OBTENERESCENARIO Summary of this function goes here
 %   Detailed explanation goes here
     cam=videoinput('winvideo',1,'RGB24_640x480');
@@ -6,6 +6,7 @@ function [ umbral ] = obtenerEscenario(s)
     w=rgb2gray(w);
 
     % Fusión de la captura y las mask
+    s=obtenerMasks();
     si=s{:,1};sd=s{:,2};ii=s{:,3};id=s{:,4};
     fsi=si.*w;
     fsd=sd.*w;

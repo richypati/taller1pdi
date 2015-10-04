@@ -1,45 +1,25 @@
 % Limpiando
 clear all;close all;clc;
 
-%% Cargando mascaras
-si=imread('mask_si.bmp'); % Superior Izquierda
-sd=imread('mask_sd.bmp'); % Superior Derecha
-ii=imread('mask_ii.bmp'); % Inferior Izquierda
-id=imread('mask_id.bmp'); % Inferior Derecha
-
 %% Cargando imagen
 g=imread('globo.png');
 b=imread('bomba.png');
 
 %% Cargando video
-%Para Windows
+%Para PC Ricardo
 cam=videoinput('winvideo',1,'RGB24_640x480');
 
-%Para Mac
+%Para Mac JuanPa
 %cam=videoinput('macvideo',1,'YCbCr422_1280x720');
 
-%% Redimensionando imagen
-si=uint8(si);
-sd=uint8(sd);
-ii=uint8(ii);
-id=uint8(id);
+s=obtenerMasks();
+si=s{:,1};
+sd=s{:,2};
+ii=s{:,3};
+id=s{:,4};
 
-% Para PC Ricardo
-si=imresize(si,[480,640]);
-sd=imresize(sd,[480,640]);
-ii=imresize(ii,[480,640]);
-id=imresize(id,[480,640]);
-
-% Para Mac JuanPa
-% si=imresize(si,[720,1280]);
-% sd=imresize(sd,[720,1280]);
-% ii=imresize(ii,[720,1280]);
-% id=imresize(id,[720,1280]);
-
-s={si,sd,ii,id};
-
-umbral=obtenerEscenario(s);
-
+objetosEnMask=ponerYDibujarObjetos();
+setappdata(0,'objetosEnMask',objetosEnMask);
 %% Procesando imagen
 while(true)
         w=getsnapshot(cam);
@@ -59,11 +39,19 @@ while(true)
         
         checksum={ssi,ssd,sii,sid};
  
-        movimientoEnMask=detectaMovimientoEnMask(umbral, checksum);
-        puntos=puntos+explotarYVerificar(objetosEnMask,movimientoEnMask);
+        movimientoEnMask=detectaMovimientoEnMask(checksum);
         
-        % TODO: Crear algoritmo para poner globos y bombas en las mascaras
-        % TODO: Crear interfaz grafica para mostrar resultados (tanto
+        if (~strc(movimientoEnMask,'no'))
+            puntos=puntos+explotarYVerificar(objetosEnMask,movimientoEnMask);
+            objetosEnMask=ponerYDibujarObjetos();
+            setappdata(0,'objetosEnMask',objetosEnMask);
+        else
+            pause(2);
+        end
+        
+        
+        % DONE: Crear algoritmo para poner globos y bombas en las mascaras
+        % WIP: Crear interfaz grafica para mostrar resultados (tanto
         % puntos como para mensaje de perdiad
         % TODO: Mostrar objetos en las esquinas sobre la imagen de la
         % camara.

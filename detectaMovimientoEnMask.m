@@ -1,8 +1,9 @@
-function [ mask ] = detectaMovimientoEnMask( umbral, checksum )
+function [ mask ] = detectaMovimientoEnMask( checksum )
 %DETECTAMOVIMIENTOENMASK Funcion que permite verificar si hay movimiento en
 %alguna de las mask
     
     % Umbral para decidir si hay cambio de movimiento en cada mask
+    umbral=getappdata(0,'umbral');
     MAX_SSI=umbral{:,1};
     MAX_SSD=umbral{:,2};
     MAX_SII=umbral{:,3};
