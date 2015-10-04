@@ -1,7 +1,7 @@
 function [ umbral ] = obtenerEscenario()
 %OBTENERESCENARIO Summary of this function goes here
 %   Detailed explanation goes here
-    cam=videoinput('winvideo',1,'RGB24_640x480');
+    cam=getCam();
     w=getsnapshot(cam);
     w=rgb2gray(w);
 

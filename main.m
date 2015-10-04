@@ -54,12 +54,36 @@ function main_OpeningFcn(hObject, eventdata, handles, varargin)
     
 % Choose default command line output for main
 handles.output = hObject;
-axes(handles.maincamera);
-global cam;
-global himage;
-cam=getCam();
-himage=image(zeros(640,480,3),'parent',handles.maincamera);
-preview(cam,himage);
+
+% Mostrando Camara
+    axes(handles.maincamera);
+    global cam;
+    global himage;
+    cam=getCam();
+    % Para PC Ricardo
+    himage=image(zeros(480,640,3),'parent',handles.maincamera);
+    % Para MAC JuanPa
+    %himage=image(zeros(720,1280,3),'parent',handles.maincamera);
+    preview(cam,himage);
+    ponerYDibujarObjetos();
+
+% Mostrando Objetos
+    axes(handles.oSI);
+    oSI=getappdata(0,'oSI');
+    imshow(strcat(oSI,'.png'));
+
+    axes(handles.oSD);
+    oSD=getappdata(0,'oSD');
+    imshow(strcat(oSD,'.png'));
+
+    axes(handles.oII);
+    oII=getappdata(0,'oII');
+    imshow(strcat(oII,'.png'));
+
+    axes(handles.oID);
+    oID=getappdata(0,'oID');
+    imshow(strcat(oID,'.png'));
+
 % Update handles structure
 guidata(hObject, handles);
 

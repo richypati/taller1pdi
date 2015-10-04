@@ -13,5 +13,9 @@ function [ objetos ] = ponerYDibujarObjetos( )
         end
         objetos{:,i}=o;
     end
+    
+    setappdata(0,'oSI',objetos{:,1});
+    setappdata(0,'oSD',objetos{:,2});
+    setappdata(0,'oII',objetos{:,3});
+    setappdata(0,'oID',objetos{:,4});
 end
-

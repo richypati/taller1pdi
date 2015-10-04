@@ -6,11 +6,7 @@ g=imread('globo.png');
 b=imread('bomba.png');
 
 %% Cargando video
-%Para PC Ricardo
-cam=videoinput('winvideo',1,'RGB24_640x480');
-
-%Para Mac JuanPa
-%cam=videoinput('macvideo',1,'YCbCr422_1280x720');
+cam=getCam();
 
 s=obtenerMasks();
 si=s{:,1};
@@ -41,10 +37,16 @@ while(true)
  
         movimientoEnMask=detectaMovimientoEnMask(checksum);
         
-        if (~strc(movimientoEnMask,'no'))
+        movSI=movimientoEnMask{:,1};
+        movSD=movimientoEnMask{:,2};
+        movII=movimientoEnMask{:,3};
+        movID=movimientoEnMask{:,4};
+        
+        if (~strcmp(movSI,'no') && ~strcmp(movSD,'no') && ~strcmp(movII,'no') && ~strcmp(movID,'no'))
             puntos=puntos+explotarYVerificar(objetosEnMask,movimientoEnMask);
             objetosEnMask=ponerYDibujarObjetos();
             setappdata(0,'objetosEnMask',objetosEnMask);
+            setappdata(0,'puntos',puntos);
         else
             pause(2);
         end
@@ -53,27 +55,7 @@ while(true)
         % DONE: Crear algoritmo para poner globos y bombas en las mascaras
         % WIP: Crear interfaz grafica para mostrar resultados (tanto
         % puntos como para mensaje de perdiad
-        % TODO: Mostrar objetos en las esquinas sobre la imagen de la
+        % WIP: Mostrar objetos en las esquinas sobre la imagen de la
         % camara.
-        
-%        figure(1);imshow(fsd);
-%        title(['valor=',num2str(ssd)]);
-        
-%         hold onclc
-%         [xb,yb]=size(w);
-%         [xg,yg]=size(g);
-%         image(0,0,g)
-%         hold on
-%         image(yb-xg,0,g)
-%         hold on
-%         image(0,xb-xg,g)
-%         hold on
-%         image(yb-xg,xb-xg,g)
-%         if (f>3900000)
-%             
-%         else
-%             figure(1);imshow(getsnapshot(cam))
-%             title('MOVIMIENTO!!!');
-%         end
         pause(0.05)
 end
