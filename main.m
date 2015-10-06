@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 04-Oct-2015 16:02:15
+% Last Modified by GUIDE v2.5 05-Oct-2015 19:21:52
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -102,11 +102,12 @@ function varargout = main_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in btnConfig.
-function btnConfig_Callback(hObject, eventdata, handles)
-% hObject    handle to btnConfig (see GCBO)
+% --- Executes on button press in btnStaticSnapshot.
+function btnStaticSnapshot_Callback(hObject, eventdata, handles)
+% hObject    handle to btnStaticSnapshot (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+set(handles.btnStaticSnapshot,'Enable','off');
 global cam;
 global himage;
 % Se detiene la camara para poder tomar la foto
@@ -115,11 +116,30 @@ umbral=obtenerEscenario();
 setappdata(0,'umbral',umbral);
 % Se vuelve a mostrar la camara
 preview(cam,himage);
-
+set(handles.btnStaticSnapshot,'Enable','on');
 
 % --- Executes on button press in btnStart.
 function btnStart_Callback(hObject, eventdata, handles)
 % hObject    handle to btnStart (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-fingerBomb;
+global cam;
+setappdata(0,'cam',cam);
+run fingerBomb
+
+
+% --- Executes on button press in btnMovingSnapshot.
+function btnMovingSnapshot_Callback(hObject, eventdata, handles)
+% hObject    handle to btnMovingSnapshot (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.btnMovingSnapshot,'Enable','off');
+global cam;
+global himage;
+% Se detiene la camara para poder tomar la foto
+stoppreview(cam);
+movimiento=obtenerEscenario();
+setappdata(0,'movimiento',movimiento);
+% Se vuelve a mostrar la camara
+preview(cam,himage);
+set(handles.btnMovingSnapshot,'Enable','on');

@@ -14,6 +14,9 @@ function [ mask ] = detectaMovimientoEnMask( checksum )
     sii=checksum{:,3};
     sid=checksum{:,4};
     
+    msjMAX=strcat('MAX: ',int2str(MAX_SSI),'-',int2str(MAX_SSD),'-',int2str(MAX_SII),'-',int2str(MAX_SID));
+    msjSS=strcat('SS',int2str(ssi),'-',int2str(ssd),'-',int2str(sii),'-',int2str(sid));
+    
     maskSSI='no';
     maskSSD='no';
     maskSII='no';
