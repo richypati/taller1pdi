@@ -3,28 +3,34 @@ function [ mask ] = detectaMovimientoEnMask( checksum )
 %alguna de las mask
     
     % Umbral para decidir si hay cambio de movimiento en cada mask
-    MAX_SSI=600000;
-    MAX_SSD=600000;
-    MAX_SII=600000;
-    MAX_SID=600000;
+    umbral=getappdata(0,'umbral');
+    MAX_SSI=umbral{:,1};
+    MAX_SSD=umbral{:,2};
+    MAX_SII=umbral{:,3};
+    MAX_SID=umbral{:,4};
 
-    ssi=checksum(1);
-    ssd=checksum(2);
-    sii=checksum(3);
-    sid=checksum(4);
+    ssi=checksum{:,1};
+    ssd=checksum{:,2};
+    sii=checksum{:,3};
+    sid=checksum{:,4};
     
-    mask='no';
+    maskSSI='no';
+    maskSSD='no';
+    maskSII='no';
+    maskSID='no';
     
     if(ssi<MAX_SSI)
-        mask='ssi';
+        maskSSI='si';
     end
     if (ssd<MAX_SSD)
-        mask='ssd';
+        maskSSD='si';
     end
     if (sii<MAX_SII)
-        mask='sii';
+        maskSII='si';
     end
     if (sid<MAX_SID)
-        mask='sid';
+        maskSID='si';
     end
+    
+    mask={maskSSI,maskSSD,maskSII,maskSID};
 end
