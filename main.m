@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 04-Oct-2015 16:02:15
+% Last Modified by GUIDE v2.5 14-Oct-2015 20:55:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -65,24 +65,6 @@ handles.output = hObject;
     % Para MAC JuanPa
     %himage=image(zeros(720,1280,3),'parent',handles.maincamera);
     preview(cam,himage);
-    ponerYDibujarObjetos();
-
-% Mostrando Objetos
-    axes(handles.oSI);
-    oSI=getappdata(0,'oSI');
-    imshow(strcat(oSI,'.png'));
-
-    axes(handles.oSD);
-    oSD=getappdata(0,'oSD');
-    imshow(strcat(oSD,'.png'));
-
-    axes(handles.oII);
-    oII=getappdata(0,'oII');
-    imshow(strcat(oII,'.png'));
-
-    axes(handles.oID);
-    oID=getappdata(0,'oID');
-    imshow(strcat(oID,'.png'));
 
 % Update handles structure
 guidata(hObject, handles);
@@ -101,25 +83,23 @@ function varargout = main_OutputFcn(hObject, eventdata, handles)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
-
-% --- Executes on button press in btnConfig.
-function btnConfig_Callback(hObject, eventdata, handles)
-% hObject    handle to btnConfig (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-global cam;
-global himage;
-% Se detiene la camara para poder tomar la foto
-stoppreview(cam);
-umbral=obtenerEscenario();
-setappdata(0,'umbral',umbral);
-% Se vuelve a mostrar la camara
-preview(cam,himage);
-
-
 % --- Executes on button press in btnStart.
 function btnStart_Callback(hObject, eventdata, handles)
 % hObject    handle to btnStart (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-fingerBomb;
+set(handles.btnStart,'Enable','off');
+global cam;
+setappdata(0,'cam',cam);
+setappdata(0,'aciertos',0);
+preview(cam);
+ponerYDibujarObjetos(handles);
+run bomberHand;
+
+
+% --- Executes on button press in btnPonerObjetos.
+function btnPonerObjetos_Callback(hObject, eventdata, handles)
+% hObject    handle to btnPonerObjetos (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+ponerYDibujarObjetos(handles);
